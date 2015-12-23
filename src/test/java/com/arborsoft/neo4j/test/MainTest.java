@@ -1,19 +1,22 @@
 package com.arborsoft.neo4j.test;
 
 import com.arborsoft.neo4j.Application;
-import com.arborsoft.neo4j.config.Neo4jConfiguration;
 import com.arborsoft.neo4j.domain.Product;
 import com.arborsoft.neo4j.service.StagingCatalogService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.SpringApplicationContextLoader;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@SpringApplicationConfiguration(classes = {Application.class, Neo4jConfiguration.class})
+@ContextConfiguration(
+        loader = SpringApplicationContextLoader.class,
+        classes = Application.class
+)
 public class MainTest {
     @Autowired
     private StagingCatalogService stagingCatalogService;

@@ -9,6 +9,7 @@ import java.lang.reflect.Field;
 import java.util.Date;
 
 public class NodeConverter<N extends BaseNode> {
+    @SuppressWarnings("unchecked")
     public N map(Node node) {
         try {
             Assert.notNull(node);
@@ -25,7 +26,7 @@ public class NodeConverter<N extends BaseNode> {
                 if (field.getType().equals(Date.class)) {
                     field.set(result, new Date((long) node.getProperty(key)));
                 } else if (field.getType().isEnum()) {
-                    field.set(result, Enum.valueOf(field.getType().asSubclass(Enum.class), node.getProperty(key).toString()));
+                    field.set(result, Enum.valueOf((Class<Enum>) field.getType(), node.getProperty(key).toString()));
                 } else if (Number.class.isAssignableFrom(field.getType())) {
                     field.set(result, field.getType().getMethod("valueOf", String.class).invoke(field, node.getProperty(key).toString()));
                 } else if (field.getType().equals(Class.class)) {
